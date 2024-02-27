@@ -1,0 +1,45 @@
+<!-- Fixed navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top headroom">
+    <div class="container">
+        <div class="navbar-header">
+            <!-- Button for smallest screens -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png"
+                    alt="Progressus HTML5 template"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li class="menu-home"><a href="index.php">Home</a></li>
+                <li class="menu-produits"><a href="index.php#produits">Nos produits</a></li>
+                <li class="menu-contact"><a href="contact.php">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!-- /.navbar -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtenez l'URL de la page actuelle
+        var currentUrl = window.location.href;
+
+        // Obtenez tous les éléments de menu
+        var menuItems = document.querySelectorAll(".nav li");
+
+        // Parcourez chaque élément de menu
+        menuItems.forEach(function(item) {
+            // Obtenez l'URL de destination de l'élément de menu
+            var itemUrl = item.querySelector("a").getAttribute("href");
+
+            // Vérifiez si l'URL de la page actuelle correspond à l'URL de destination de l'élément de menu
+            if (currentUrl.includes(itemUrl)) {
+                // Ajoutez la classe "active" à l'élément de menu correspondant
+                item.classList.add("active");
+            } else {
+                // Supprimez la classe "active" des autres éléments de menu
+                item.classList.remove("active");
+            }
+        });
+    });
+</script>
