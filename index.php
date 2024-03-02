@@ -19,7 +19,7 @@
 							<div class="row">
 								<h1 class="lead">Bois précieux exceptionnels en ligne</h1>
 								<div class="tagline">Explorez notre site de vente de bois pour découvrir une sélection exceptionnelle de produits de qualité</div>
-								<p><a class="btn btn-default btn-lg" role="button">PLUS D'INFOS</a> <a class="btn btn-action btn-lg" role="button">EXPLORER &rarr;</a></p>
+								<p> <a href="#produits" class="btn btn-action btn-lg" role="button">EXPLORER &rarr;</a></p>
 							</div>
 						</div>
 					</strong>
@@ -31,7 +31,7 @@
 								<h1 class="lead">Maison du bois</h1>
 								<div class="tagline">N°1 du Bois de chauffage</div>
 								<div class="tagline">Bois Éco-Responsable | Coupé à la Main | Travaillé en France</div>
-								<p><a class="btn btn-action btn-lg" role="button">EXPLORER &rarr;</a></p>
+								<p><a href="#produits" class="btn btn-action btn-lg" role="button">EXPLORER &rarr;</a></p>
 							</div>
 						</div>
 					</strong>
@@ -88,13 +88,13 @@
 								$prix_produit = $row['prix_produit'];
 								$pathimage_produit = $row['pathimage_produit'];
 							?>
-								<div class="col-md-3" style="margin: 10px auto;">
-									<div class="card product-card">
-										<?php echo '<a href="produit.php?$id=\''.$id_produit.'\'"'?> ><img src="wp-content/uploads/2023/<?php echo $pathimage_produit; ?>" class="card-img-top product-img" alt="Image du produit"></a>
-										<div class="card-body" style="padding-left:10%;">
-											<h5 class="card-title"><?php echo $nom_produit; ?></h5>
-											<p class="card-text"><strong><?php echo $prix_produit; ?> <em>€</em></strong></p>
-											<a href="" class="btn btn-primary" onclick="ajouterAuPanier(<?php echo $id_produit; ?>)"> <i  class="fas fa-shopping-cart"></i> Commander</a>
+								<div class="col-md-6" style="margin: 10px auto;">
+									<div class="row card product-card">
+										<?php echo '<a href="produit.php?$id=\''.$id_produit.'\'"'?> ><img src="image/<?php echo $pathimage_produit; ?>" style="margin:4%;" class="card-img-top product-img image-fluide" width="70%" height="70%" alt="Image du produit"></a>
+										<div class="card-body text-center" style=" display:flex; flex-direction:column;align-items:center;justify-content:center;">
+											<div class="col-md-6"><h5 class="card-title"><?php echo $nom_produit; ?></h5></div>
+											<div class="col-md-6"><p class="card-text"><strong><?php echo $prix_produit; ?> <em>€</em></strong></p></div>
+											<div class="col-md-6"><?php echo '<a href="commande.php?$id=  '   .$id_produit.'    " class="btn btn-primary"'?> > <i  class="fas fa-shopping-cart"></i> Commander</a></div>
 										</div>
 									</div>
 								</div>

@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php require('head.html') ?>
+<?php require('head.html'); ?>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css">
 
 <body class="home">
 	<?php require('header.html'); ?>
@@ -47,31 +49,25 @@
 
 									<div class="row">
 										<div class="col-sm-6">
-											<img src="wp-content/uploads/2023/<?php echo $pathimage_produit; ?>" class="card-img-top product-img" width="70%" alt="Image du produit">
+											<img src="image/<?php echo $pathimage_produit; ?>" class="card-img-top product-img" width="90%" alt="Image du produit">
 										</div>
 
 										<div class="card col-sm-6" style="padding-left:10%;">
 											<h3 class="card-title" style="margin:5% auto 10% auto ;"><?= ucfirst($nom_produit); ?></h3>
 											<p class="card-text" style="margin:2% auto 5% auto ;"><strong><?php echo $prix_produit; ?> <em>€</em></strong></p>
 											<div style="margin:5% auto;">
-												<h3><?= ucfirst('description'); ?></h3>
-												<p style="margin:2% auto"><?php echo $description_produit; ?></p> <!-- Ajout de la description du produit -->
+												<a href="">
+													<h3><?= ucfirst('description'); ?></h3>
+												</a>
+												<p style="margin:2% auto"><?php echo substr($description_produit, 0, 100) ?>...</p> <!-- Ajout de la description du produit -->
 												<div style="margin:2% auto">
-													<a style="color: black;text-decoration:none;" role="button" data-toggle="collapse" href="#collapse1" aria-expanded="false" aria-controls="collapseExample">
-														<?= ucfirst('garantie dans 5 ans'); ?> +
+													<a style="color: black;" href="#description">
+														Voir plus +
 													</a>
-													<div class="collapse" id="collapse1">
-														<p>Nous avons une telle confiance dans la qualité de nos trottinnette electrique que si l’un d’entre eux ne vous convient pas pour quelque raison que ce soit, nous vous rembourserons intégralement votre commande dans un délai d’un jour, sans poser de questions. </p>
 
-													</div>
 												</div>
 												<div style="margin:2% auto">
-													<a style="color: black;text-decoration:none;" role="button" data-toggle="collapse" href="#collapse2" aria-expanded="false" aria-controls="collapseExample">
-														<?= ucfirst('garantie de remboursement dans 30 jours'); ?>
-													</a>
-													<div class="collapse" id="collapse2">
-														<p>Nous avons une telle confiance dans la qualité de nos trottinnette electrique que si l’un d’entre eux ne vous convient pas pour quelque raison que ce soit, nous vous rembourserons intégralement votre commande dans un délai d’un jour, sans poser de questions. Si vous avez besoin d’aide, n’hésitez pas à nous contacter à l’adresse contact@cozyhome-fr.com.</p>
-													</div>
+
 												</div>
 												<div>
 													<ul class="product_extras_list">
@@ -84,7 +80,16 @@
 												</div>
 
 											</div>
-											<a href="" class="btn btn-primary" onclick="ajouterAuPanier(<?php echo $id_produit; ?>)"> <i class="fas fa-shopping-cart"></i> Commander</a>
+											<?php echo '<a href="commande.php?$id=  ' . $id_produit . '  " class="btn btn-primary"'; ?> > <i class="fas fa-shopping-cart"></i> Commander</a>
+										</div>
+									</div>
+									<div class="row" id="description" style="margin:8% auto">
+										<div class="text-center">
+											<h3><?= ucfirst('description'); ?></h3>
+											<hr>
+											<div style="margin:4% auto">
+												<p style="margin:2% auto"><?php echo $description_produit; ?></p> <!-- Ajout de la description du produit -->
+											</div>
 										</div>
 									</div>
 								</div>
@@ -102,8 +107,6 @@
 			// En cas d'erreur de connexion ou d'exécution de la requête
 			echo "Erreur : " . $e->getMessage();
 		}
-		// Fermeture de la connexion
-		$conn = null;
 		?>
 	</div>
 
@@ -127,51 +130,16 @@
 	<?php require('footer.html'); ?>
 
 	<!-- JavaScript libs -->
+
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	<script src="assets/js/headroom.min.js"></script>
 	<script src="assets/js/jQuery.headroom.min.js"></script>
 	<script src="assets/js/template.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
 
-	<?php
-require 'vendor/clear.php'; // Inclure le fichier d'autoloading de PHPMailer
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-// Créer une instance de PHPMailer
-$mail = new PHPMailer(true);
-
-try {
-    // Paramètres du serveur SMTP
-    $mail->isSMTP();
-    $mail->Host       = 'smtp.example.com'; // Adresse du serveur SMTP
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'votre_adresse@example.com'; // Adresse e-mail de l'expéditeur
-    $mail->Password   = 'votre_mot_de_passe'; // Mot de passe de l'expéditeur
-    $mail->SMTPSecure = 'tls';
-    $mail->Port       = 587;
-
-    // Destinataire et sujet de l'e-mail
-    $mail->setFrom('votre_adresse@example.com', 'Votre Nom');
-    $mail->addAddress('destinataire@example.com');
-    $mail->Subject = 'Nouvelle commande de produit';
-
-    // Contenu de l'e-mail
-    $message = "Détails de la commande :\n\n";
-    $message .= "Produit : $nom_produit\n";
-    $message .= "Prix : $prix_produit €\n";
-    $message .= "Quantité : $quantite_produit\n";
-    $mail->Body = $message;
-
-    // Envoyer l'e-mail
-    $mail->send();
-
-    echo "<p>La commande a été envoyée avec succès.</p>";
-} catch (Exception $e) {
-    echo "Une erreur s'est produite lors de l'envoi de l'e-mail : {$mail->ErrorInfo}";
-}
-?>
 </body>
 
 </html>

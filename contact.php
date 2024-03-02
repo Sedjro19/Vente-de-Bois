@@ -20,8 +20,7 @@
 		$name = validate_input($_POST['name']);
 		$email = validate_input($_POST['email']);
 		$phone = validate_input($_POST['phone']);
-		$message = validate_input($_POST['message']);
-		$newsletter = isset($_POST['newsletter']) ? true : false;
+		$message = validate_input($_POST['message']); 
 
 		// Validation des champs requis
 		if (empty($name)) {
@@ -45,23 +44,26 @@
 		// Vérification des erreurs de validation
 		if (empty($errors)) {
 			// Adresse e-mail du destinataire
-			$email_destinataire = 'austinvitoessi@gmail.com';
+			$email_destinataire = 'terenceaustintin@gmail.com';
 
 			// Sujet de l'e-mail
 			$subject = 'Nouveau message du formulaire de contact';
 
 			// Contenu de l'e-mail
-			$body = "Nom: $name\n";
-			$body .= "Email: $email\n";
-			$body .= "Téléphone: $phone\n";
-			$body .= "Message:\n$message";
+			$body = 'Nom: '.$name.'\n
+					 Email: '.$email.'\n
+					 Téléphone: '.$phone.'\n
+					 Message:\n'.$message;
 
 			// En-têtes de l'e-mail
 			$headers = "From: $email\r\n";
-			$headers .= "Reply-To: $email\r\n";
+			$headers = "MIME-version:1.0\n";
+			$headers = "Content-type:text/html;charset=uft-8 \n";
+			$headers = "Reply-To: $email\r\n";
 
+			$result = mail($email_destinataire, $subject, $body, $headers);
 			// Envoi de l'e-mail
-			if (mail($email_destinataire, $subject, $body, $headers)) {
+			if ($result) {
 				echo "Votre message a été envoyé avec succès.";
 			} else {
 				echo "Une erreur s'est produite lors de l'envoi du message.";
@@ -1732,7 +1734,7 @@
 					</address>
 					<h4>Phone:</h4>
 					<address>
-						(713) 791-1414
+						+1 (438) 800-3422
 					</address>
 				</div>
 
